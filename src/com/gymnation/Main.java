@@ -1,7 +1,5 @@
 package com.gymnation;
 
-import com.gymnation.Login;
-
 import javax.swing.*;
 
 public class Main {
@@ -15,5 +13,6 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             new Login().setVisible(true);
         });
+        
     }
 }
