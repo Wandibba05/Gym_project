@@ -4,15 +4,64 @@
   <meta charset="UTF-8">
   <title>Dashboard - GYMNATION</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .green { color: green; }
+    .red { color: red; }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="logo">Welcome <span class="green">GYM</span><span class="red">NATION</span> 💪</div>
-  </header>
-  <main>
-    <h1>YOU ARE SUCCESSFULLY LOGGED IN!</h1>
-    <p>Enjoy your workout experience.</p>
+  <div class="container">
+    <div class="logo">
+      Welcome to <span class="green">GYM</span><span class="red">NATION</span> 💪
+    </div>
+    <main>
+      <h1>Welcome, <span id="username">New User</span>!</h1>
+      <p>You have successfully logged in. We're excited to have you on board!</p>
+      <p>Enjoy your workout experience and start your fitness journey today.</p>
+    </main>
+  </div>
 
-  </main>
+  <script>
+    // Simulating dynamic username (replace with real logic)
+    const username = "John"; // Replace with dynamic value
+    document.getElementById('username').textContent = username;
+  </script>
 </body>
 </html>
