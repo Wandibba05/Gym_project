@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up - GYMNATION</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">GYM<span class="green">N</span><span class="red">ATION</span></div>
+  </header>
+<div class="signup-page">
+  <section class="signup-form">
+    <h2>Create Your Account</h2>
+    <form>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+</div>
+    <form onsubmit="event.preventDefault(); registerUser();">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="password" id="password" placeholder="Create Password" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p id="generatedID" style="margin-top: 20px; font-weight: bold;"></p>
+  </div>
+  <script>
+    function registerUser() {
+      const name = document.getElementById("name").value;
+      const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById("generatedID").innerText = `Welcome, ${name}! Your ID is ${userId}`;
+
+      // Save membership ID and name in localStorage
+      localStorage.setItem(userId, name);
+
+      // Optional: clear input fields after registering
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+    }
+  </script>
+
+</body>
+</html>
+
+</body>
+</html>
