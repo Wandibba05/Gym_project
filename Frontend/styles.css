@@ -43,7 +43,7 @@
   }
   
   .hero {
-    background: url('images/figma\ imagge.jpg') no-repeat center center/cover;
+    background: url('images/figma\ image.jpg') no-repeat center center/cover;
     height: 100vh;
     position: relative;
     display: flex;
@@ -79,7 +79,6 @@
       .package-platinum {
         background: linear-gradient(135deg, #d4af37, #f5e084); /* golden */
         color: black;
-        font-weight: bold;
       }
       
   
@@ -111,7 +110,7 @@
     cursor: pointer;
   }
   .signup-page {
-    background: url('images/backgroung.png') no-repeat center center/cover;
+    background: url('images/background.png') no-repeat center center/cover;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -163,6 +162,13 @@
   .package-card:hover {
     transform: scale(1.05);
   }
+
+  .card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; 
+}
+
   
 
   /* Login Page Styling */
