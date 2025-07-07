@@ -22,19 +22,51 @@
   </div>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e){
+    // Auto-fill membership ID if available from signup
+    window.addEventListener('load', function() {
+      const lastId = sessionStorage.getItem('lastGeneratedId');
+      if (lastId) {
+        document.getElementById('memberId').value = lastId;
+        sessionStorage.removeItem('lastGeneratedId'); // Clear after use
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e){
       e.preventDefault();
       const memberId = document.getElementById('memberId').value.trim();
-      const name = localStorage.getItem(memberId);
-
       const loginMsg = document.getElementById('loginMsg');
-      if(name) {
-        loginMsg.style.color = 'green';
-        loginMsg.textContent = `Welcome back, ${name}!`;
-        // Redirect or show logged-in content here
-      } else {
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId: memberId })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.name) {
+          loginMsg.style.color = 'green';
+          loginMsg.textContent = `Welcome back, ${data.name}!`;
+          // Store user session
+          sessionStorage.setItem('currentUser', JSON.stringify({
+            userId: memberId,
+            name: data.name
+          }));
+          // Redirect to dashboard after successful login
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1500);
+        } else {
+          loginMsg.style.color = 'red';
+          loginMsg.textContent = 'Invalid Membership ID. Please try again.';
+        }
+      } catch (error) {
+        console.error('Error:', error);
         loginMsg.style.color = 'red';
-        loginMsg.textContent = 'Invalid Membership ID. Please try again.';
+        loginMsg.textContent = 'Login failed. Please try again.';
       }
     });
   </script>
