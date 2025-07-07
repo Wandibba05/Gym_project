@@ -43,7 +43,7 @@
   }
   
   .hero {
-    background: url('images/figma\ imagge.jpg') no-repeat center center/cover;
+    background: url('images/figma\ image.jpg') no-repeat center center/cover;
     height: 100vh;
     position: relative;
     display: flex;
@@ -79,7 +79,6 @@
       .package-platinum {
         background: linear-gradient(135deg, #d4af37, #f5e084); /* golden */
         color: black;
-        font-weight: bold;
       }
       
   
@@ -111,7 +110,7 @@
     cursor: pointer;
   }
   .signup-page {
-    background: url('images/backgroung.png') no-repeat center center/cover;
+    background: url('images/background.png') no-repeat center center/cover;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -163,6 +162,13 @@
   .package-card:hover {
     transform: scale(1.05);
   }
+
+  .card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; 
+}
+
   
 
   /* Login Page Styling */
@@ -243,6 +249,86 @@
     color: #ff6b6b;
     margin-top: 10px;
   }
-  
+  * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #1f2937;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      color: #111827;
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      flex-grow: 1;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #4b5563;
+    }
+
+    .card .btn {
+      margin-top: 1.5rem;
+      background: #111827;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      align-self: flex-start;
+    }
+
+    .card .btn:hover {
+      background: #1f2937;
+    }
+
+    @media (max-width: 600px) {
+      .card h2 {
+        font-size: 1.3rem;
+      }
+
+      .card p {
+        font-size: 0.95rem;
+      }
+    }
   
   
