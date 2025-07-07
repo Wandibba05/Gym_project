@@ -9,42 +9,48 @@
   <header>
     <div class="logo">GYM<span class="green">N</span><span class="red">ATION</span></div>
   </header>
-<div class="signup-page">
-  <section class="signup-form">
-    <h2>Create Your Account</h2>
-    <form>
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email Address" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">Sign Up</button>
-    </form>
-  </section>
-</div>
-    <form onsubmit="event.preventDefault(); registerUser();">
-      <input type="text" id="name" placeholder="Full Name" required>
-      <input type="password" id="password" placeholder="Create Password" required>
-      <button type="submit">Sign Up</button>
-    </form>
-    <p id="generatedID" style="margin-top: 20px; font-weight: bold;"></p>
+
+  <div class="signup-page">
+    <section class="signup-form">
+      <h2>Create Your Account</h2>
+      <form onsubmit="event.preventDefault(); registerUser();">
+        <input type="text" id="name" placeholder="Full Name" required />
+        <input type="email" id="email" placeholder="Email Address" required />
+        <input type="password" id="password" placeholder="Create Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+      <p id="generatedID" style="margin-top: 20px; font-weight: bold;"></p>
+    </section>
   </div>
+
   <script>
     function registerUser() {
       const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Generate unique membership ID
       const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
-      document.getElementById("generatedID").innerText = `Welcome, ${name}! Your ID is ${userId}`;
 
-      // Save membership ID and name in localStorage
-      localStorage.setItem(userId, name);
+      // Show welcome message
+      document.getElementById("generatedID").innerText =
+        `Welcome, ${name}! Your ID is ${userId}`;
 
-      // Optional: clear input fields after registering
+      // Save user data and ID
+      localStorage.setItem(userId, JSON.stringify({ name, email }));
+      // Store ID temporarily for login page
+      sessionStorage.setItem('lastGeneratedId', userId);
+
+      // Clear input fields
       document.getElementById("name").value = "";
       document.getElementById("email").value = "";
       document.getElementById("password").value = "";
+
+      // Redirect to login page after a short delay to show the welcome message
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000); // 2 seconds delay
     }
   </script>
-
-</body>
-</html>
-
 </body>
 </html>

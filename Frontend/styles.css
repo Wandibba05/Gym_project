@@ -330,5 +330,15 @@
         font-size: 0.95rem;
       }
     }
+     #shopImages {
+      display: none; /* Hidden by default */
+      margin-top: 20px;
+    }
+
+    #shopImages img {
+      width: 200px;
+      margin: 10px;
+      border-radius: 10px;
+    }
   
   
