@@ -34,13 +34,69 @@
     document.getElementById('loginForm').addEventListener('submit', function(e){
       e.preventDefault();
       const memberId = document.getElementById('memberId').value.trim();
-      const name = localStorage.getItem(memberId);
-
+      const storedData = localStorage.getItem(memberId);
       const loginMsg = document.getElementById('loginMsg');
-      if(name) {
+
+      if (storedData) {
+        const user = JSON.parse(storedData);
+        localStorage.setItem("loggedInUser", user.name);
+        localStorage.setItem("loggedInID", memberId);
+
         loginMsg.style.color = 'green';
-        loginMsg.textContent = `Welcome back, ${name}!`;
-        // Redirect or show logged-in content here
+        loginMsg.textContent = `Welcome back, ${user.name}!`;
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
+      } else {
+        loginMsg.style.color = 'red';
+        loginMsg.textContent = 'Invalid Membership ID. Please try again.';
+      }
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - GYMNATION</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">GYM<span class="green">N</span><span class="red">ATION</span></div>
+  </header>
+
+  <div class="login-page">
+    <section class="login-form">
+      <h2>Member Login</h2>
+      <form id="loginForm">
+        <input type="text" id="memberId" placeholder="Enter Membership ID" required />
+        <button type="submit">Log In</button>
+      </form>
+      <p id="loginMsg" style="margin-top: 20px; font-weight: bold;"></p>
+    </section>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const memberId = document.getElementById('memberId').value.trim();
+      const storedData = localStorage.getItem(memberId);
+      const loginMsg = document.getElementById('loginMsg');
+
+      if (storedData) {
+        const user = JSON.parse(storedData);
+        localStorage.setItem("loggedInUser", user.name);
+        localStorage.setItem("loggedInID", memberId);
+
+        loginMsg.style.color = 'green';
+        loginMsg.textContent = `Welcome back, ${user.name}!`;
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
       } else {
         loginMsg.style.color = 'red';
         loginMsg.textContent = 'Invalid Membership ID. Please try again.';
