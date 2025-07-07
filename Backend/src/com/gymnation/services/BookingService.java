@@ -57,7 +57,21 @@ public class BookingService {
     }
 
     public Booking createBooking(String userId, String className, String trainerName, LocalDateTime time) {
-        // Check if trainer is available
+        // Check working hours
+        if (!isWithinWorkingHours(time)) {
+            System.out.println("❌ Bookings are only allowed between 6 AM and 8 PM.");
+            return null;
+        }
+
+        // Check if user already has a booking at this time
+        for (Booking b : userBookings.getOrDefault(userId, new ArrayList<>())) {
+            if (b.getBookingTime().equals(time)) {
+                System.out.println("❌ You already have a booking at this time.");
+                return null;
+            }
+        }
+
+        // Check trainer availability
         if (!isTrainerAvailable(trainerName, time)) {
             System.out.println("❌ Sorry, trainer " + trainerName + " is not available at " + time);
             return null;
@@ -67,10 +81,10 @@ public class BookingService {
         String bookingId = UUID.randomUUID().toString();
         Booking booking = new Booking(bookingId, userId, className, trainerName, time);
 
-        // Add to user bookings
+        // Record user booking
         userBookings.computeIfAbsent(userId, k -> new ArrayList<>()).add(booking);
 
-        // Add to trainer schedule
+        // Record trainer booking time
         trainerSchedule.computeIfAbsent(trainerName, k -> new ArrayList<>()).add(time);
 
         System.out.println("✅ Booking successful: " + booking);
@@ -80,6 +94,11 @@ public class BookingService {
     public boolean isTrainerAvailable(String trainerName, LocalDateTime time) {
         List<LocalDateTime> bookedTimes = trainerSchedule.getOrDefault(trainerName, new ArrayList<>());
         return !bookedTimes.contains(time);
+    }
+
+    private boolean isWithinWorkingHours(LocalDateTime time) {
+        int hour = time.getHour();
+        return hour >= 6 && hour <= 20; // 6 AM to 8 PM
     }
 
     public List<Booking> getUserBookings(String userId) {
@@ -112,4 +131,5 @@ public class BookingService {
         }
     }
 }
+
 
