@@ -1,0 +1,80 @@
+x<!DOCTYPE html>
+<html lang="en" class="packageselection">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Package Selection - GYMNATION</title>
+  <link rel="stylesheet" href="styles.css" />
+  
+</head>
+<body class="packageselection">
+
+  <div class="background-overlay"></div>
+
+  <h1 class="package-title-main">Choose Your Package</h1>
+  <p class="username-banner">Hello, <span id="username">Guest</span> 👋</p>
+
+  <div class="packages-container">
+    <div class="package-card package-regular">
+      <h2 class="package-title">Regular</h2>
+      <p class="package-description">Basic gym access and standard equipment.</p>
+      <button class="select-btn" data-package="Regular">Select</button>
+    </div>
+    <div class="package-card package-premium">
+      <h2 class="package-title">Premium</h2>
+      <p class="package-description">Instructor booking and full gym access</p>
+      <button class="select-btn" data-package="Premium">Select</button>
+    </div>
+    <div class="package-card package-platinum">
+      <h2 class="package-title">Platinum</h2>
+      <p class="package-description">Personal trainer, gym merch, house calls, instructor of your choice.</p>
+      <button class="select-btn" data-package="Platinum">Select</button>
+    </div>
+  </div>
+<script>
+  const userName = localStorage.getItem("loggedInUser");
+  const userId = localStorage.getItem("loggedInID");
+
+  if (!userName || !userId) {
+    window.location.href = "login.html";
+  } else {
+    document.getElementById("username").textContent = userName;
+  }
+
+  const buttons = document.querySelectorAll(".select-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const selectedPackage = btn.getAttribute("data-package");
+
+      const userData = JSON.parse(localStorage.getItem(userId));
+      userData.package = selectedPackage;
+
+      localStorage.setItem(userId, JSON.stringify(userData));
+
+      // Redirect based on selected package
+      if (selectedPackage === "Regular") {
+        window.location.href = "regulardash.html";
+      } else if (selectedPackage === "Premium") {
+        window.location.href = "premiumdashboard.html";
+      } else if (selectedPackage === "Platinum") {
+        window.location.href = "platinumpage.html";
+      } else {
+        alert("Unknown package. Please try again.");
+      }
+    });
+  });
+
+  const cards = document.querySelectorAll('.package-card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      cards.forEach(c => c.classList.remove('hovered'));
+      card.classList.add('hovered');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('hovered');
+    });
+  });
+</script>
+</body>
+</html>

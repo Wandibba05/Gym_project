@@ -24,26 +24,31 @@
   </div>
 
   <script>
-    function registerUser() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  function registerUser() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-      // Generate unique membership ID
-      const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
+    
+    const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
 
-      // Show welcome message
-      document.getElementById("generatedID").innerText =
-        `Welcome, ${name}! Your ID is ${userId}`;
+   
+    const userData = { name, email, password };
+    localStorage.setItem(userId, JSON.stringify(userData));
+    localStorage.setItem("loggedInUser", name);
+    localStorage.setItem("loggedInID", userId);
 
-      // Save to localStorage (optional for now)
-      localStorage.setItem(userId, JSON.stringify({ name, email }));
+    
+    document.getElementById("generatedID").innerText = 
+      `Welcome, ${name}! Your Membership ID is ${userId}`;
 
-      // Clear input fields
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("password").value = "";
-    }
-  </script>
+    
+    setTimeout(() => {
+      window.location.href = "packageselection.html";
+    }, 6000); 
+  }
+</script>
+
+
 </body>
 </html>
