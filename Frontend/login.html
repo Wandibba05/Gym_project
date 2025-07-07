@@ -22,6 +22,15 @@
   </div>
 
   <script>
+    // Auto-fill membership ID if available from signup
+    window.addEventListener('load', function() {
+      const lastId = sessionStorage.getItem('lastGeneratedId');
+      if (lastId) {
+        document.getElementById('memberId').value = lastId;
+        sessionStorage.removeItem('lastGeneratedId'); // Clear after use
+      }
+    });
+
     document.getElementById('loginForm').addEventListener('submit', function(e){
       e.preventDefault();
       const memberId = document.getElementById('memberId').value.trim();

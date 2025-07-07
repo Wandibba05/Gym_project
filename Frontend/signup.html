@@ -36,13 +36,20 @@
       document.getElementById("generatedID").innerText =
         `Welcome, ${name}! Your ID is ${userId}`;
 
-      // Save to localStorage (optional for now)
+      // Save user data and ID
       localStorage.setItem(userId, JSON.stringify({ name, email }));
+      // Store ID temporarily for login page
+      sessionStorage.setItem('lastGeneratedId', userId);
 
       // Clear input fields
       document.getElementById("name").value = "";
       document.getElementById("email").value = "";
       document.getElementById("password").value = "";
+
+      // Redirect to login page after a short delay to show the welcome message
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000); // 2 seconds delay
     }
   </script>
 </body>
