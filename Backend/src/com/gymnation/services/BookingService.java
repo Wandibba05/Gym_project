@@ -3,7 +3,26 @@ package com.gymnation.services;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class BookingService {
+// Interface segregation: defining small, role-specific interfaces
+interface BookingCreator {
+    BookingService.Booking createBooking(String userId, String className, String trainerName, LocalDateTime time);
+}
+
+interface BookingCanceller {
+    boolean cancelBooking(String userId, String bookingId);
+}
+
+interface BookingViewer {
+    List<BookingService.Booking> getUserBookings(String userId);
+    void printAllBookings();
+}
+
+interface TrainerAvailabilityChecker {
+    boolean isTrainerAvailable(String trainerName, LocalDateTime time);
+}
+
+// BookingService now implements segregated interfaces
+public class BookingService implements BookingCreator, BookingCanceller, BookingViewer, TrainerAvailabilityChecker {
 
     public static class Booking {
         private String bookingId;
@@ -48,22 +67,21 @@ public class BookingService {
         }
     }
 
-    private Map<String, List<Booking>> userBookings;       // userId -> bookings
-    private Map<String, List<LocalDateTime>> trainerSchedule; // trainerName -> list of booked times
+    private Map<String, List<Booking>> userBookings;
+    private Map<String, List<LocalDateTime>> trainerSchedule;
 
     public BookingService() {
         userBookings = new HashMap<>();
         trainerSchedule = new HashMap<>();
     }
 
+    @Override
     public Booking createBooking(String userId, String className, String trainerName, LocalDateTime time) {
-        // Check working hours
         if (!isWithinWorkingHours(time)) {
             System.out.println("❌ Bookings are only allowed between 6 AM and 8 PM.");
             return null;
         }
 
-        // Check if user already has a booking at this time
         for (Booking b : userBookings.getOrDefault(userId, new ArrayList<>())) {
             if (b.getBookingTime().equals(time)) {
                 System.out.println("❌ You already have a booking at this time.");
@@ -71,40 +89,22 @@ public class BookingService {
             }
         }
 
-        // Check trainer availability
         if (!isTrainerAvailable(trainerName, time)) {
             System.out.println("❌ Sorry, trainer " + trainerName + " is not available at " + time);
             return null;
         }
 
-        // Create booking
         String bookingId = UUID.randomUUID().toString();
         Booking booking = new Booking(bookingId, userId, className, trainerName, time);
 
-        // Record user booking
         userBookings.computeIfAbsent(userId, k -> new ArrayList<>()).add(booking);
-
-        // Record trainer booking time
         trainerSchedule.computeIfAbsent(trainerName, k -> new ArrayList<>()).add(time);
 
         System.out.println("✅ Booking successful: " + booking);
         return booking;
     }
 
-    public boolean isTrainerAvailable(String trainerName, LocalDateTime time) {
-        List<LocalDateTime> bookedTimes = trainerSchedule.getOrDefault(trainerName, new ArrayList<>());
-        return !bookedTimes.contains(time);
-    }
-
-    private boolean isWithinWorkingHours(LocalDateTime time) {
-        int hour = time.getHour();
-        return hour >= 6 && hour <= 20; // 6 AM to 8 PM
-    }
-
-    public List<Booking> getUserBookings(String userId) {
-        return userBookings.getOrDefault(userId, Collections.emptyList());
-    }
-
+    @Override
     public boolean cancelBooking(String userId, String bookingId) {
         List<Booking> bookings = userBookings.get(userId);
         if (bookings != null) {
@@ -122,6 +122,12 @@ public class BookingService {
         return false;
     }
 
+    @Override
+    public List<Booking> getUserBookings(String userId) {
+        return userBookings.getOrDefault(userId, Collections.emptyList());
+    }
+
+    @Override
     public void printAllBookings() {
         System.out.println("=== All Bookings ===");
         for (List<Booking> bookings : userBookings.values()) {
@@ -130,6 +136,18 @@ public class BookingService {
             }
         }
     }
+
+    @Override
+    public boolean isTrainerAvailable(String trainerName, LocalDateTime time) {
+        List<LocalDateTime> bookedTimes = trainerSchedule.getOrDefault(trainerName, new ArrayList<>());
+        return !bookedTimes.contains(time);
+    }
+
+    private boolean isWithinWorkingHours(LocalDateTime time) {
+        int hour = time.getHour();
+        return hour >= 6 && hour <= 20;
+    }
 }
+
 
 
