@@ -1,82 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up - GYMNATION</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GYMNATION</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  
   <header>
     <div class="logo">GYM<span class="green">N</span><span class="red">ATION</span></div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="signup.html">Sign Up</a>
+      <a href="login.html">Log In</a>
+    </nav>
   </header>
 
-<<<<<<< HEAD:index.html
-  <div class="signup-page">
-    <section class="signup-form">
-      <h2>Create Your Account</h2>
-      <form onsubmit="event.preventDefault(); registerUser();">
-        <input type="text" id="name" placeholder="Full Name" required />
-        <input type="email" id="email" placeholder="Email Address" required />
-        <input type="password" id="password" placeholder="Create Password" required />
-        <button type="submit">Sign Up</button>
-      </form>
-      <p id="generatedID" style="margin-top: 20px; font-weight: bold;"></p>
-    </section>
-  </div>
-=======
  
   <section class="hero">
     <div class="overlay">
-      <a href="signup.html">
-      <button class="cta-button">JOIN US</button>
-      </a>
+        <button class="cta-button" onclick="window.location.href='signup.html'">JOIN US</button>
+
     </div>
   </section>
->>>>>>> edac85016e85f3550c616c238d1405d8ccdb2c8e:Frontend/index.html
 
-  <script>
-    function registerUser() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  
+  <section id="services" class="services-section">
+    <h2>Our Services</h2>
+    <div class="services-container">
+      <div class="service-card">
+        <h3>Gym Access</h3>
+        <p>Unlimited use of our state-of-the-art equipment.</p>
+      </div>
+      <div class="service-card">
+        <h3>Personal Training</h3>
+        <p>Work one-on-one with certified trainers.</p>
+      </div>
+      <div class="service-card">
+        <h3>Home Visits</h3>
+        <p>Trainers available for in-home sessions (Platinum package).</p>
+      </div>
+    </div>
+  </section>
 
-<<<<<<< HEAD:index.html
-      // Generate unique membership ID
-      const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
-
-      // Show welcome message
-      document.getElementById("generatedID").innerText =
-        `Welcome, ${name}! Your ID is ${userId}`;
-
-      // Save to localStorage (optional for now)
-      localStorage.setItem(userId, JSON.stringify({ name, email }));
-
-      // Clear input fields
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("password").value = "";
-    }
-  </script>
-=======
   <section class="packages-section">
-    <h2>Our Packages</h2>
+    <h2>Our GYMNATION Packages</h2>
     <div class="packages-container">
       <div class="package-card package-regular">
         <h3>Regular</h3>
-        <p>Basic gym access and standard equipment.</p>
+        <p>Basic gym access and standard equipment</p>
       </div>
       <div class="package-card package-premium">
         <h3>Premium</h3>
-        <p>Includes group classes and access to premium areas.</p>
+        <p>instructor booking and full gym access</p>
       </div>
-     <a href="platinumpage.html" class="card-link">
-  <div class="package-card package-platinum">
-    <h3>Platinum</h3>
-    <p>Personal trainer, gym merch, house calls, instructor of your choice</p>
-  </div>
-</a>
+      <div class="package-card package-platinum">
+        <h3>Platinum</h3>
+        <p>Personal trainer,gym merch, house calls,intructor of your choice</p>
+      </div>
     </div>
   </section>
->>>>>>> edac85016e85f3550c616c238d1405d8ccdb2c8e:Frontend/index.html
+  <footer class="site-footer">
+    <div class="footer-container">
+      <h3>About Us</h3>
+      <p>GYMNATION is dedicated to providing top-tier fitness experiences</p>
+    
+      <p>Contact us at: info@gymnation.com | Phone: +254718851313</p>
+    </div>
+  </footer>
+  
 </body>
 </html>
