@@ -5,58 +5,47 @@ import java.util.Map;
 
 public class PaymentService {
 
+    private static final double REQUIRED_PAYMENT = 100.00;
+
     public enum PaymentMethod {
         DEBIT_CARD,
         CREDIT_CARD,
         PAYPAL,
         MPESA_EXPRESS,
-        BANK_CARD
+    
     }
 
-    private static final double REQUIRED_PAYMENT = 100.00; // Minimum required payment
-
-    private Map<String, Double> paymentRecords;
+    private Map<String, Double> paymentRecords = new HashMap<>();
+    private Map<PaymentMethod, PaymentProcessor> processors = new HashMap<>();
 
     public PaymentService() {
-        paymentRecords = new HashMap<>();
+        // Register processors (strategy map)
+        processors.put(PaymentMethod.DEBIT_CARD, new DebitCardProcessor());
+        processors.put(PaymentMethod.CREDIT_CARD, new CreditCardProcessor());
+        processors.put(PaymentMethod.PAYPAL, new PaypalProcessor());
+        processors.put(PaymentMethod.MPESA_EXPRESS, new MpesaExpressProcessor());
+        
     }
 
-    // Process a payment for a user with a specified method
     public boolean processPayment(String userId, double amount, PaymentMethod method) {
         if (amount < REQUIRED_PAYMENT) {
             System.out.println("Sorry, the payment is invalid. Minimum required is $" + REQUIRED_PAYMENT);
             return false;
         }
 
-        System.out.println("Processing payment of $" + amount + " for user: " + userId);
-        System.out.println("Payment Method: " + method.name());
+        PaymentProcessor processor = processors.get(method);
 
-        // Simulate payment gateway logic
-        switch (method) {
-            case DEBIT_CARD:
-                System.out.println("Debit card payment processed.");
-                break;
-            case CREDIT_CARD:
-                System.out.println("Credit card payment processed.");
-                break;
-            case PAYPAL:
-                System.out.println("PayPal payment processed.");
-                break;
-            case MPESA_EXPRESS:
-                System.out.println("M-Pesa Express payment processed.");
-                break;
-            case BANK_CARD:
-                System.out.println("Bank card payment processed.");
-                break;
-            default:
-                System.out.println("Sorry, the payment is invalid. Unsupported method.");
-                return false;
+        if (processor == null) {
+            System.out.println("Unsupported payment method: " + method);
+            return false;
         }
 
-        // Record the payment
-        paymentRecords.put(userId, paymentRecords.getOrDefault(userId, 0.0) + amount);
-        System.out.println("Thank you for the payment!");
-        return true;
+        boolean success = processor.process(userId, amount);
+        if (success) {
+            paymentRecords.put(userId, paymentRecords.getOrDefault(userId, 0.0) + amount);
+            System.out.println("Thank you for the payment!");
+        }
+        return success;
     }
 
     public double getTotalPaid(String userId) {
@@ -74,5 +63,3 @@ public class PaymentService {
         }
     }
 }
-
-

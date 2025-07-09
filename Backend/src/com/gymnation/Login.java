@@ -1,8 +1,8 @@
 package com.gymnation;
 
-import com.gymnation.Background;
-import javax.swing.*;
+import com.gymnation.models.GymMember;
 import java.awt.*;
+import javax.swing.*;
 
 public class Login extends JFrame {
     private JTextField usernameField;
@@ -15,7 +15,7 @@ public class Login extends JFrame {
         setLocationRelativeTo(null);
 
         // ✅ Add background image
-        JPanel backgroundPanel = new Background("backgroung.png");
+        JPanel backgroundPanel = new Background("/images/background.png");
         backgroundPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -56,5 +56,32 @@ public class Login extends JFrame {
 
     private void handleLogin() {
         // Your login logic here
+        String username = usernameField.getText();
+
+String userId = "U001";
+String name = usernameField.getText();
+String email = "user@example.com"; // Replace with real value or database query
+String password = new String(passwordField.getPassword());
+String gender = "Male";
+String membershipId = "M123";
+String subscriptionType = "Premium";
+
+
+GymMember member;
+        member = new GymMember(userId, name, email, password, gender, membershipId, subscriptionType);
+
+// Example condition — replace with your actual validation logic
+if (username.equals("member") && password.equals("1234")) {
+    // Close login window
+    this.dispose();
+
+    // Open the member dashboard
+    SwingUtilities.invokeLater(() -> {
+        new MemberDashboard(member).setVisible(true); // or new Booking()...
+    });
+
+} else {
+    JOptionPane.showMessageDialog(this, "Invalid login. Try again.");
+}
     }
 }

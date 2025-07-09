@@ -8,6 +8,7 @@ public class BookingService {
     public static class Booking {
         private String bookingId;
         private String userId;
+        @SuppressWarnings("FieldMayBeFinal")
         private String className;
         private String trainerName;
         private LocalDateTime bookingTime;
