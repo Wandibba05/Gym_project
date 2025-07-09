@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regular Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard">
+  <nav class="top-nav">
+    <div class="nav-left">
+      <h3>Gym Dashboard</h3>
+    </div>
+    <div class="nav-right">
+      <span id="branchStatus"></span>
+    </div>
+  </nav>
+
+  <div style="margin: 10px 20px; text-align: right;">
+    <input type="text" id="branchInput" placeholder="Enter your gym branch" />
+    <button id="saveBranchBtn">Save Branch</button>
+  </div>
+
+  <header>
+    <h1>Welcome, <span id="userName">Manucho</span>!</h1>
+    <p id="date"></p>
+  </header>
+
+  <section class="progress-section">
+    <h2>Your Progress</h2>
+    <canvas id="workoutChart" width="400" height="200"></canvas>
+  </section>
+
+  <section class="calendar-section">
+    <h2>Workout Schedule</h2>
+    <ul>
+      <li><input type="checkbox" /> Monday - Cardio</li>
+      <li><input type="checkbox" /> Wednesday - Strength</li>
+      <li><input type="checkbox" /> Friday - Full Body</li>
+    </ul>
+  </section>
+
+  <section class="log-section">
+    <h2>Workout Log</h2>
+    <form>
+      <input type="text" placeholder="Workout Type" required />
+      <input type="number" placeholder="Duration (mins)" required />
+      <textarea placeholder="Notes..."></textarea>
+      <button type="submit">Save Log</button>
+    </form>
+    <div class="log-entries">
+      <p><strong>June 6:</strong> 45 mins Cardio - Felt great!</p>
+      <p><strong>June 5:</strong> Rest day</p>
+    </div>
+  </section>
+
+  <section class="package-info">
+    <h2>Regular Package Benefits</h2>
+    <ul>
+      <li>Unlimited gym access</li>
+      <li>Standard equipment use</li>
+      <li>Locker room access</li>
+    </ul>
+    <p>Need more? <a href="#">Upgrade to Premium</a></p>
+  </section>
+
+  <footer>
+    <a href="#">Edit Profile</a> | <a href="#">Log Out</a>
+  </footer>
+
+  <script>
+    // Display today's date
+    document.getElementById("date").innerText = new Date().toDateString();
+
+    // Load user's name
+    const name = localStorage.getItem("loggedInUser");
+    if (name) {
+      document.getElementById("userName").innerText = name;
+    }
+
+    // Chart
+    const ctx = document.getElementById('workoutChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        datasets: [{
+          label: 'Workout Duration (min)',
+          data: [45, 0, 60, 0, 50],
+          backgroundColor: 'rgba(0, 114, 255, 0.6)'
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Highlight today's workout
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+      const workoutItems = document.querySelectorAll('.calendar-section ul li');
+      workoutItems.forEach(item => {
+        if (item.textContent.includes(today)) {
+          item.classList.add('today-highlight');
+        }
+      });
+    });
+
+    // Branch Input Logic
+    const branchInput = document.getElementById('branchInput');
+    const saveBranchBtn = document.getElementById('saveBranchBtn');
+    const branchStatus = document.getElementById('branchStatus');
+
+    saveBranchBtn.addEventListener('click', () => {
+      const branchName = branchInput.value.trim();
+      if (branchName) {
+        localStorage.setItem('userBranch', branchName);
+        branchStatus.textContent = `Current branch set: ${branchName}`;
+        branchStatus.style.color = 'lightgreen';
+      } else {
+        branchStatus.textContent = 'Please enter a branch/location.';
+        branchStatus.style.color = 'salmon';
+      }
+    });
+
+    window.addEventListener('load', () => {
+      const savedBranch = localStorage.getItem('userBranch');
+      if (savedBranch) {
+        branchInput.value = savedBranch;
+        branchStatus.textContent = `Current branch set: ${savedBranch}`;
+        branchStatus.style.color = 'lightgreen';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -5,57 +5,176 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Platinum Package - Gym</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Font Awesome CDN for Icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-..."
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+  
 </head>
 <body>
-  <h1 class="royal-heading">
-  <i class="fas fa-crown"></i> Platinum Package
-</h1>
+
+  <header>
+    <h2>Welcome, <span id="platinumUser">Platinum Member</span> 👑</h2>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
+  </header>
+
+  <h1 style="margin-top: 20px;">Platinum Package</h1>
 
   <div class="container">
-    <!-- Merchandise Card -->
-    <div class="card" onclick="openModal('merchandiseModal')">
-      <div class="icon">
-        <i class="fas fa-shopping-bag"></i>
-      </div>
+    <div class="card">
       <h2>Exclusive Merchandise</h2>
       <p>
-        Enjoy premium gym apparel, accessories, and branded gear available only to Platinum members. Get monthly drops and discounts on new arrivals.
+        Enjoy premium gym apparel, accessories, and branded gear available only to Platinum members.
+        Get monthly drops and discounts on new arrivals.
       </p>
-      <button class="btn">Shop Now</button>
+      <button class="btn" id="shopNowBtn">Shop Now</button>
     </div>
-    
+     <div id="shopImages" style="display: none;">
+      <img src="images/100bdfad91fc556e3743d8f105e40b0a.jpg" alt="T-shirt">
+      <img src="images/cee5618610930d6b4104f18a2127bf55.jpg" alt="Water Bottle">
+      <img src="images/faad9d8d5ee0b881a898ad63bf4883d8.jpg" alt="Gym Bag">
+    </div>
+    <style>
+      #shopImages {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      #shopImages img {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+      #shopImages img:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </div>
 
-    <!-- Instructors Card -->
     <div class="card">
-      <div class="icon">
-        <i class="fas fa-user-tie"></i>
-      </div>
       <h2>Elite Instructors</h2>
       <p>
-        Get access to one-on-one sessions with top-tier fitness instructors. Customized plans, check-ins, and progress tracking included.
+        Get access to one-on-one sessions with top-tier fitness instructors.
+        Customized plans, check-ins, and progress tracking included.
       </p>
-      <button class="btn">Meet Coaches</button>
+      <button class="btn" id="meetCoachesBtn">Meet Coaches</button>
     </div>
-
-    <!-- Remote Workouts Card -->
-    <div class="card">
-      <div class="icon">
-        <i class="fas fa-laptop"></i>
+    <div id="coachImages" style="display: none;">
+      <div class="coach-card">
+        <img src="images/5337caebc2d7ce5d907b3bc9696f431d.jpg" alt="Sarah Wilson">
+        <h3>Mark Wilson</h3>
+        <p>Biceps and Triceps Expert</p>
       </div>
+      <div class="coach-card">
+        <img src="images/8414895db3e170ea9ae4aea476dacc52.jpg" alt="John Martinez">
+        <h3>John Martinez</h3>
+        <p>Strength & Conditioning</p>
+      </div>
+      <div class="coach-card">
+        <img src="images/eb79651891c51ed47e9533de0b4eab24.jpg" alt="Emily Chen">
+        <h3>Emily Chen</h3>
+        <p>HIIT & Cardio Specialist</p>
+      </div>
+      <div class="coach-card">
+        <img src="images/88d11a3428462b2e143d8c4a28af7a60.jpg" alt="Mike Johnson">
+        <h3>Mike Johnson</h3>
+        <p>Bodybuilding Coach</p>
+      </div>
+    </div>
+    <style>
+      #coachImages {
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        flex-wrap: wrap;
+      }
+      @media (min-width: 1024px) {
+        #coachImages {
+          flex-wrap: nowrap;
+        }
+      }
+      .coach-card {
+        width: 250px;
+        text-align: center;
+        background: white;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+      .coach-card:hover {
+        transform: scale(1.05);
+      }
+      .coach-card img {
+        width: 220px;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+      .coach-card h3 {
+        margin: 10px 0 5px;
+        color: #333;
+      }
+      .coach-card p {
+        margin: 5px 0;
+        color: #666;
+        font-size: 0.9em;
+      }
+    </style>
+
+    <div class="card">
       <h2>Remote Workouts</h2>
       <p>
-        Join live and on-demand virtual workout sessions anytime, anywhere. Includes yoga, HIIT, strength, and more—tailored to your level.
+        Join live and on-demand virtual workout sessions anytime, anywhere.
+        Includes yoga, HIIT, strength, and more—tailored to your level.
       </p>
       <button class="btn">Start Training</button>
     </div>
   </div>
+
+
+  <script>
+    const username = localStorage.getItem("loggedInUser");
+    const userId = localStorage.getItem("loggedInID");
+
+    if (!username || !userId) {
+      // Not logged in, send to login page
+      window.location.href = "login.html";
+    } else {
+      const userData = JSON.parse(localStorage.getItem(userId));
+
+      if (!userData || userData.package !== "Platinum") {
+        alert("Access restricted to Platinum members only.");
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("platinumUser").textContent = username;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("loggedInID");
+      window.location.href = "login.html";
+    }
+  </script>
+
+=======
+  <script>
+    document.getElementById('shopNowBtn').addEventListener('click', function () {
+      const imageSection = document.getElementById('shopImages');
+      imageSection.style.display = 'block';
+    });
+
+    document.getElementById('meetCoachesBtn').addEventListener('click', function () {
+      const coachSection = document.getElementById('coachImages');
+      coachSection.style.display = 'block';
+    });
+  </script>
+
 </body>
 </html>
