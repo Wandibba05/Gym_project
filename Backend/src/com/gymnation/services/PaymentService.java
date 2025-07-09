@@ -12,7 +12,7 @@ public class PaymentService {
         CREDIT_CARD,
         PAYPAL,
         MPESA_EXPRESS,
-    
+
     }
 
     private Map<String, Double> paymentRecords = new HashMap<>();
@@ -24,7 +24,7 @@ public class PaymentService {
         processors.put(PaymentMethod.CREDIT_CARD, new CreditCardProcessor());
         processors.put(PaymentMethod.PAYPAL, new PaypalProcessor());
         processors.put(PaymentMethod.MPESA_EXPRESS, new MpesaExpressProcessor());
-        
+
     }
 
     public boolean processPayment(String userId, double amount, PaymentMethod method) {

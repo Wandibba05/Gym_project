@@ -31,26 +31,42 @@
       }
     });
 
-    document.getElementById('loginForm').addEventListener('submit', function(e){
+    document.getElementById('loginForm').addEventListener('submit', async function(e){
       e.preventDefault();
       const memberId = document.getElementById('memberId').value.trim();
-      const storedData = localStorage.getItem(memberId);
       const loginMsg = document.getElementById('loginMsg');
 
-      if (storedData) {
-        const user = JSON.parse(storedData);
-        localStorage.setItem("loggedInUser", user.name);
-        localStorage.setItem("loggedInID", memberId);
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId: memberId })
+        });
 
-        loginMsg.style.color = 'green';
-        loginMsg.textContent = `Welcome back, ${user.name}!`;
+        const data = await response.json();
 
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 1000);
-      } else {
+        if (response.ok && data.name) {
+          loginMsg.style.color = 'green';
+          loginMsg.textContent = `Welcome back, ${data.name}!`;
+          // Store user session
+          sessionStorage.setItem('currentUser', JSON.stringify({
+            userId: memberId,
+            name: data.name
+          }));
+          // Redirect to dashboard after successful login
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1500);
+        } else {
+          loginMsg.style.color = 'red';
+          loginMsg.textContent = 'Invalid Membership ID. Please try again.';
+        }
+      } catch (error) {
+        console.error('Error:', error);
         loginMsg.style.color = 'red';
-        loginMsg.textContent = 'Invalid Membership ID. Please try again.';
+        loginMsg.textContent = 'Login failed. Please try again.';
       }
     });
   </script>

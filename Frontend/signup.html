@@ -24,31 +24,56 @@
   </div>
 
   <script>
-  function registerUser() {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    async function registerUser() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    
-    const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
+      // Generate unique membership ID
+      const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
 
-   
-    const userData = { name, email, password };
-    localStorage.setItem(userId, JSON.stringify(userData));
-    localStorage.setItem("loggedInUser", name);
-    localStorage.setItem("loggedInID", userId);
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId,
+            name,
+            email,
+            password
+          })
+        });
 
-    
-    document.getElementById("generatedID").innerText = 
-      `Welcome, ${name}! Your Membership ID is ${userId}`;
+        if (response.ok) {
+          // Show welcome message
+          document.getElementById("generatedID").innerText =
+            `Welcome, ${name}! Your ID is ${userId}`;
+          document.getElementById("generatedID").style.color = 'green';
 
-    
-    setTimeout(() => {
-      window.location.href = "packageselection.html";
-    }, 6000); 
-  }
-</script>
+          // Store ID temporarily for login page
+          sessionStorage.setItem('lastGeneratedId', userId);
 
+          // Clear input fields
+          document.getElementById("name").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("password").value = "";
 
-</body> 
+          // Redirect to login page after a short delay
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 2000);
+        } else {
+          document.getElementById("generatedID").innerText = "Registration failed. Please try again.";
+          document.getElementById("generatedID").style.color = 'red';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById("generatedID").innerText = "Registration failed. Please try again.";
+        document.getElementById("generatedID").style.color = 'red';
+      }
+    }
+  </script>
+</body>
 </html>
