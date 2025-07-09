@@ -1,60 +1,69 @@
 package com.gymnation;
 
-import com.gymnation.Background;
+import com.gymnation.models.GymMember;
+import com.gymnation.models.Branch;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.sql.*;
 
 public class Login extends JFrame {
-    private JTextField usernameField;
+    private JTextField emailField;
     private JPasswordField passwordField;
 
     public Login() {
         setTitle("Login");
-        setSize(500, 400);
+        setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new GridLayout(3, 2));
 
-        // ✅ Add background image
-        JPanel backgroundPanel = new Background("backgroung.png");
-        backgroundPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        add(new JLabel("Email:"));
+        emailField = new JTextField();
+        add(emailField);
 
-        JLabel title = new JLabel("Welcome to Your Gym");
-        title.setFont(new Font("SansSerif", Font.BOLD, 18));
-        title.setForeground(Color.WHITE);
-        gbc.gridwidth = 2;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        backgroundPanel.add(title, gbc);
+        add(new JLabel("Password:"));
+        passwordField = new JPasswordField();
+        add(passwordField);
 
-        gbc.gridwidth = 1;
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        backgroundPanel.add(new JLabel("Username:"), gbc);
-        gbc.gridx = 1;
-        usernameField = new JTextField(15);
-        backgroundPanel.add(usernameField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        backgroundPanel.add(new JLabel("Password:"), gbc);
-        gbc.gridx = 1;
-        passwordField = new JPasswordField(15);
-        backgroundPanel.add(passwordField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        JButton loginBtn = new JButton("Login");
-        loginBtn.addActionListener(e -> handleLogin());
-        backgroundPanel.add(loginBtn, gbc);
-
-        setContentPane(backgroundPanel);
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(this::login);
+        add(loginButton);
     }
 
-    private void handleLogin() {
-        // Your login logic here
+    private void login(ActionEvent e) {
+        String inputEmail = emailField.getText();
+        String inputPassword = new String(passwordField.getPassword());
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM gym_members WHERE email = ? AND password = ?";
+            assert conn != null;
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, inputEmail);
+            stmt.setString(2, inputPassword);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                GymMember member = new GymMember(
+                        rs.getString("user_id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("gender"),
+                        rs.getString("membership_id"),
+                        rs.getString("subscription_type"),
+                        new Branch(rs.getString("branch_id"), rs.getString("branch_location"))
+                );
+
+                this.dispose();
+                new MemberDashboard(member).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Login failed. Check your credentials.");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -1,9 +1,8 @@
 package com.gymnation;
 
 import com.gymnation.models.GymMember;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class MemberDashboard extends JFrame {
     private GymMember member;
