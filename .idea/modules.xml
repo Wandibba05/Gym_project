@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 7/Array challenge/Array challenge.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 7/Array challenge/Array challenge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Backend/Backend.iml" filepath="$PROJECT_DIR$/Backend/Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 1/Challenge 1.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 1/Challenge 1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 2/Challenge 2.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 2/Challenge 2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 5/Challenge 5.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 5/Challenge 5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 7/Challenge 7/Challenge 7.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/Challenge 7/Challenge 7/Challenge 7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/ExceptionHandling/ExceptionHandling.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/ExceptionHandling/ExceptionHandling.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GYM OOP PROJECT 2/GYM OOP PROJECT 2.iml" filepath="$PROJECT_DIR$/GYM OOP PROJECT 2/GYM OOP PROJECT 2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Group solid principle/Group solid principle.iml" filepath="$PROJECT_DIR$/Group solid principle/Group solid principle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Gym OOP project/Gym OOP project.iml" filepath="$PROJECT_DIR$/Gym OOP project/Gym OOP project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Java Projects.iml" filepath="$PROJECT_DIR$/.idea/Java Projects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/OOP 2 ICS 2101.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/OOP 2 ICS 2101.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOP 2 ICS 2101/Recursion/Recursion.iml" filepath="$PROJECT_DIR$/OOP 2 ICS 2101/Recursion/Recursion.iml" />
+    </modules>
+  </component>
+</project>
