@@ -52,8 +52,8 @@ public class Login extends JFrame {
                         rs.getString("password"),
                         rs.getString("gender"),
                         rs.getString("membership_id"),
-                        rs.getString("subscription_type"),
-                        new Branch(rs.getString("branch_id"), rs.getString("branch_location"))
+                        rs.getString("subscription_type")
+
                 );
 
                 this.dispose();
