@@ -9,42 +9,46 @@
   <header>
     <div class="logo">GYM<span class="green">N</span><span class="red">ATION</span></div>
   </header>
-<div class="signup-page">
-  <section class="signup-form">
-    <h2>Create Your Account</h2>
-    <form>
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email Address" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">Sign Up</button>
-    </form>
-  </section>
-</div>
-    <form onsubmit="event.preventDefault(); registerUser();">
-      <input type="text" id="name" placeholder="Full Name" required>
-      <input type="password" id="password" placeholder="Create Password" required>
-      <button type="submit">Sign Up</button>
-    </form>
-    <p id="generatedID" style="margin-top: 20px; font-weight: bold;"></p>
+
+  <div class="signup-page">
+    <section class="signup-form">
+      <h2>Create Your Account</h2>
+      <form onsubmit="event.preventDefault(); registerUser();">
+        <input type="text" id="name" placeholder="Full Name" required />
+        <input type="email" id="email" placeholder="Email Address" required />
+        <input type="password" id="password" placeholder="Create Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+      <p id="generatedID" style="margin-top: 20px; font-weight: bold;"></p>
+    </section>
   </div>
+
   <script>
-    function registerUser() {
-      const name = document.getElementById("name").value;
-      const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
-      document.getElementById("generatedID").innerText = `Welcome, ${name}! Your ID is ${userId}`;
+  function registerUser() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-      // Save membership ID and name in localStorage
-      localStorage.setItem(userId, name);
+    
+    const userId = "USER-" + Math.floor(100000 + Math.random() * 900000);
 
-      // Optional: clear input fields after registering
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("password").value = "";
-    }
-  </script>
+   
+    const userData = { name, email, password };
+    localStorage.setItem(userId, JSON.stringify(userData));
+    localStorage.setItem("loggedInUser", name);
+    localStorage.setItem("loggedInID", userId);
 
-</body>
-</html>
+    
+    document.getElementById("generatedID").innerText = 
+      `Welcome, ${name}! Your Membership ID is ${userId}`;
 
-</body>
+    
+    setTimeout(() => {
+      window.location.href = "packageselection.html";
+    }, 6000); 
+  }
+</script>
+
+
+</body> 
 </html>
